@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zone · Say the word. It's on-chain. · $ZONE</title>
+<meta name="description" content="Zone ($ZONE): the token launch agent on Solana. Give it a name, a ticker and a link. Zone writes the contract, wires your 2% creator share and mints it on-chain.">
+<meta name="theme-color" content="#008080">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<link rel="icon" id="fav" href="data:,">
+<style>
+:root{--teal:#008080;--teal2:#0a9a9a;--navy:#000080;--win:#c0c0c0;--lime:#7cff5b;--cyan:#33f0ff;--mag:#ff2bd6;--amber:#ffae2b;--yellow:#ffe14d;--red:#ff4d4d;--violet:#a77bff;--blue:#3a7bff;--pink:#ff8ad8;
+  --pix:"Silkscreen",ui-monospace,monospace;--term:"VT323",ui-monospace,monospace;--ui:Tahoma,"MS Sans Serif",Verdana,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--teal)}
+body{background:var(--teal);color:#000;font:400 12px/1.4 var(--ui);overflow-x:hidden;padding-bottom:34px;
+  background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.4px);background-size:6px 6px}
+a{color:inherit}button{font:inherit;color:inherit;cursor:pointer}
+canvas{image-rendering:pixelated;image-rendering:crisp-edges}
+::selection{background:var(--navy);color:#fff}
+.skip{position:fixed;left:8px;top:-60px;z-index:300;background:#fff;padding:6px 10px}.skip:focus{top:8px}
+/* bevel kit */
+.win{background:var(--win);border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:inset -1px -1px 0 #808080,inset 1px 1px 0 #dfdfdf,3px 3px 0 rgba(0,0,0,.35)}
+.tb{display:flex;align-items:center;gap:5px;height:20px;margin:2px;padding:0 2px 0 4px;background:linear-gradient(90deg,var(--navy),#1084d0);color:#fff;font:700 11px var(--ui)}
+.tb,.tb .t{color:#fff!important}.tb .t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb canvas{width:14px;height:14px;flex:none}
+.tb .bx{display:flex;gap:2px}.tb .bx span{width:16px;height:14px;background:var(--win);color:#000;border:1px solid;border-color:#fff #404040 #404040 #fff;font:900 9px/12px var(--ui);text-align:center}
+.tb.g{background:linear-gradient(90deg,#0a5a0a,#3fbf3f)}.tb.m{background:linear-gradient(90deg,#6a0a5a,#ff2bd6)}.tb.c{background:linear-gradient(90deg,#005a6a,#33c8e0)}.tb.a{background:linear-gradient(90deg,#7a4a00,#ffae2b)}.tb.v{background:linear-gradient(90deg,#3a1a7a,#a77bff)}.tb.r{background:linear-gradient(90deg,#7a0a0a,#ff4d4d)}.tb.y{background:linear-gradient(90deg,#7a6a00,#e8c820)}
+.menu{display:flex;gap:12px;padding:1px 8px 3px;font-size:11px}.menu u{text-decoration:none}.menu u::first-letter{text-decoration:underline}
+.sunk{border:2px solid;border-color:#808080 #fff #fff #808080;box-shadow:inset 1px 1px 0 #404040}
+.b95{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:26px;padding:4px 14px;font:700 11px var(--ui);background:var(--win);color:#000;border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:inset -1px -1px 0 #808080,inset 1px 1px 0 #dfdfdf;text-decoration:none;white-space:nowrap}
+.b95:active,.b95[aria-pressed="true"]{border-color:#404040 #fff #fff #404040;box-shadow:inset 1px 1px 0 #808080}
+.b95.go{background:var(--lime)}.b95.mg{background:var(--mag);color:#fff}.b95.cy{background:var(--cyan)}.b95.am{background:var(--amber)}.b95.sm{min-height:20px;padding:2px 8px;font-size:10px}
+@keyframes bl{50%{opacity:.2}}
+@keyframes mq{to{transform:translateX(-100%)}}
+/* ticker */
+.tick{position:sticky;top:0;z-index:60;display:flex;height:22px;background:#000;color:#fff;font:400 17px/22px var(--term);overflow:hidden;border-bottom:2px solid #404040}
+.tick .live{flex:none;padding:0 10px;background:var(--red);color:#fff;font:700 10px/22px var(--pix)}
+.tick .live i{display:inline-block;width:6px;height:6px;background:#fff;margin-right:5px;animation:bl 1s steps(2) infinite}
+.tick .run{flex:1;overflow:hidden;white-space:nowrap}.tick .run div{display:inline-block;padding-left:100%;animation:mq 50s linear infinite}
+.tick span{margin-right:26px}.tick b{font-weight:400}
+.top{position:sticky;top:22px;z-index:59;display:flex;align-items:center;gap:6px;height:34px;padding:0 8px;background:var(--win);border-bottom:2px solid #404040;box-shadow:inset 0 1px 0 #fff}
+.brand{display:flex;align-items:center;gap:6px;text-decoration:none;margin-right:6px}.brand canvas{width:24px;height:24px}
+.brand b{font:700 18px var(--pix);letter-spacing:1px;background:linear-gradient(90deg,#000080,#ff2bd6,#ff8a00);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav{display:flex;gap:3px}.sp{flex:1}
+/* hero */
+.hero{position:relative;display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px;padding:12px 12px 14px}
+.icons{display:flex;flex-direction:column;gap:10px;padding-top:2px}
+.dico{display:flex;flex-direction:column;align-items:center;gap:3px;color:#fff;font:400 11px var(--ui);text-align:center;text-decoration:none;cursor:pointer;padding:3px 2px;border:1px dotted transparent;background:none}
+.dico canvas{width:40px;height:40px}
+.dico span{padding:0 2px;text-shadow:1px 1px 0 #000}
+.dico:hover span,.dico:focus span{background:var(--navy)}.dico:focus{outline:none;border-color:#fff}
+.wall{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:10px;height:max(560px,calc(100vh - 56px - 34px - 26px))}
+.mon,.main{overflow:hidden}
+.mon{display:flex;flex-direction:column;min-height:0}
+.mon .scr{flex:1;min-height:0;margin:0 3px 3px;background:#05070f;overflow:hidden;position:relative;font:400 15px/1.1 var(--term);padding:4px 6px;color:#cfe}
+.mon .scr div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mon .scr::after,.main .scr::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,transparent 0 2px,rgba(0,0,0,.22) 2px 3px)}
+.mon .st{display:flex;justify-content:space-between;gap:6px;margin:0 3px 3px;padding:1px 4px;font-size:10px}
+.mon .st b{font-weight:400}
+.main{grid-column:2/span 2;grid-row:1/span 2;display:flex;flex-direction:column;min-height:0}
+.main .scr{flex:1;min-height:0;margin:0 3px 3px;background:#04060c;position:relative;display:flex;flex-direction:column;overflow:hidden}
+#out{flex:1;min-height:0;overflow-y:auto;padding:8px 12px;font:400 18px/1.16 var(--term);color:#d8ffe8;scrollbar-width:thin;scrollbar-color:#3a3a6a #04060c}
+#out .l{white-space:pre-wrap;word-break:break-word}
+.inrow{display:flex;align-items:center;gap:6px;padding:6px 12px 8px;border-top:1px dashed #1f3a4a;font:400 20px var(--term);color:var(--lime)}
+.inrow input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font:400 20px var(--term);caret-color:var(--lime)}
+.chips{display:flex;gap:4px;flex-wrap:wrap;padding:0 12px 8px}
+.chips button{font:700 9px var(--pix);padding:3px 7px;background:#0b1424;color:var(--cyan);border:1px solid #1f4a6a}
+.chips button:hover{background:#13213a;color:#fff}
+/* colours in terminal */
+.k{color:#ff6bd6}.s{color:#ffe14d}.n{color:#33f0ff}.c{color:#5a6a8a}.f{color:#7cff5b}.o{color:#ffae2b}.e{color:#ff4d4d}.w{color:#fff}.v{color:#a77bff}
+.big{font:700 clamp(28px,3.4vw,52px)/.98 var(--pix);margin:4px 0 6px}
+.big .a{color:#fff;text-shadow:3px 3px 0 #000080}.big .b{color:var(--lime);text-shadow:3px 3px 0 #0a3a0a;display:block}
+/* page */
+.page{max-width:1220px;margin:0 auto;padding:18px 14px 50px}
+.sect{display:inline-block;margin:34px 0 10px;padding:4px 10px;background:#000;color:#fff;font:700 12px var(--pix);border:2px solid;border-color:#fff #404040 #404040 #fff}
+.sect em{font-style:normal;color:var(--yellow)}
+h2.h{font:700 clamp(22px,2.8vw,34px)/1.05 var(--pix);color:#fff;text-shadow:3px 3px 0 #003a3a;margin-bottom:12px}
+h2.h span{color:var(--yellow)}
+.wb{padding:10px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.stat .wb{display:flex;align-items:center;gap:10px}
+.stat canvas{width:42px;height:42px;flex:none}
+.stat small{display:block;font:400 16px var(--term);color:#404040}
+.stat b{display:block;font:700 28px/1 var(--pix);color:#000080}
+.idx{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;padding:14px;background:#fff}
+.idx a{display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;padding:8px 4px;border:1px dotted transparent}
+.idx a:hover{border-color:#000080;background:#e8f0ff}
+.idx canvas{width:48px;height:48px}
+.idx b{font:700 10px var(--pix);color:#808080}.idx span{font:400 18px var(--term)}
+.cmdline{font:400 18px var(--term);background:#000;color:var(--lime);padding:4px 10px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.feat .wb{font:400 18px/1.2 var(--term);min-height:130px}
+.feat h3{font:700 13px var(--pix);margin-bottom:5px;color:#000080}
+.feat canvas{width:32px;height:32px;float:right;margin:0 0 4px 6px}
+.step .n{font:700 32px var(--pix);color:#000080}
+.step .wb{font:400 18px/1.2 var(--term);min-height:150px}
+.step h3{font:700 13px var(--pix);margin:2px 0 6px}
+.tl{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}.tl span{font:700 9px var(--pix);padding:2px 6px;color:#000;border:1px solid #000}
+/* explore */
+.tabs{display:flex;gap:2px;padding:0 8px;margin-bottom:-2px;position:relative;z-index:1}
+.tabs button{font:700 11px var(--ui);padding:4px 12px;background:var(--win);border:2px solid;border-color:#fff #404040 transparent #fff;border-bottom:0}
+.tabs button[aria-pressed="true"]{padding-bottom:6px;margin-top:-2px;background:var(--win)}
+.tabp{border:2px solid;border-color:#fff #404040 #404040 #fff;padding:8px}
+.toks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.tok{display:flex;gap:8px;align-items:center;padding:6px;background:#fff;border:2px solid;border-color:#808080 #fff #fff #808080;text-align:left;width:100%}
+.tok:hover{background:#ffffe1}
+.tok canvas{width:40px;height:40px;flex:none;border:1px solid #000}
+.tok b{display:block;font:700 12px var(--pix);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tok small{display:block;font:400 15px/1.05 var(--term);color:#404040;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tok .bar{display:block;height:5px;background:#ddd;margin-top:3px;border:1px solid #808080}.tok .bar i{display:block;height:100%}
+.tok .yours{font:700 8px var(--pix);background:var(--mag);color:#fff;padding:0 3px;margin-left:3px;vertical-align:2px}
+/* network */
+#netc{width:100%;height:180px;display:block;background:#000}
+.kv{display:flex;justify-content:space-between;gap:8px;padding:3px 0;border-bottom:1px dotted #808080;font-size:12px}.kv b{font:400 18px/1 var(--term)}
+.cta{text-align:center;padding:30px 14px}
+.cta h2{font:700 clamp(22px,3vw,38px)/1.05 var(--pix);color:#000080;margin:6px 0}
+.cta p{font:400 20px var(--term);margin-bottom:12px}
+.ca{display:flex;gap:6px;margin:8px 0}.ca input{flex:1;min-width:0;font:400 18px var(--term);padding:3px 8px;background:#fff;border:2px solid;border-color:#808080 #fff #fff #808080}
+.faq details{border-bottom:1px dotted #808080;padding:7px 2px}
+.faq summary{cursor:pointer;font:700 11px var(--pix);list-style:none;display:flex;justify-content:space-between;gap:8px}
+.faq summary::after{content:"[+]";font:400 17px var(--term)}.faq details[open] summary::after{content:"[-]"}
+.faq p{font:400 18px/1.2 var(--term);margin-top:5px}
+footer{padding:20px 14px 18px;text-align:center;color:#fff;font-size:11px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px}
+.badges span{width:88px;height:31px;display:flex;flex-direction:column;justify-content:center;font:700 8px/1.1 var(--pix);border:1px solid #fff;outline:1px solid #000;padding:0 4px;text-align:left}
+.counter{display:inline-flex;gap:1px;background:#000;border:2px inset #666;padding:2px;vertical-align:middle}.counter span{width:14px;height:20px;display:grid;place-items:center;background:#111;color:#7cff5b;font:700 14px var(--pix)}
+.fine{max-width:900px;margin:10px auto 0;line-height:1.5;text-shadow:1px 1px 0 #004040}
+/* taskbar */
+.task{position:fixed;left:0;right:0;bottom:0;z-index:80;height:32px;display:flex;align-items:center;gap:4px;padding:2px 3px;background:var(--win);border-top:2px solid #fff;box-shadow:0 -1px 0 #dfdfdf}
+.start{display:flex;align-items:center;gap:4px;height:26px;padding:0 6px;font:900 12px var(--ui);background:var(--win);border:2px solid;border-color:#fff #404040 #404040 #fff}
+.start canvas{width:18px;height:18px}.start[aria-expanded="true"]{border-color:#404040 #fff #fff #404040}
+.tbtn{height:26px;display:flex;align-items:center;gap:4px;padding:0 8px;max-width:160px;font:11px var(--ui);background:var(--win);border:2px solid;border-color:#fff #404040 #404040 #fff;text-decoration:none;white-space:nowrap;overflow:hidden}
+.tbtn.on{border-color:#404040 #fff #fff #404040;background:repeating-conic-gradient(#c0c0c0 0 25%,#fff 0 50%) 0 0/2px 2px}
+.tray{margin-left:auto;height:26px;display:flex;align-items:center;gap:8px;padding:0 8px;border:1px solid;border-color:#808080 #fff #fff #808080;font:11px var(--ui);white-space:nowrap}
+.tray b{font:700 9px var(--pix);color:#000080}
+.smenu{position:fixed;left:3px;bottom:34px;z-index:81;width:240px;display:none;background:var(--win);border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:2px 2px 0 #000}
+.smenu.on{display:flex}
+.smenu .side{width:24px;background:linear-gradient(0deg,#000080,#ff2bd6);display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px}
+.smenu .side b{writing-mode:vertical-rl;transform:rotate(180deg);font:700 14px var(--pix);color:#fff}
+.smenu ul{list-style:none;flex:1;padding:2px 0}
+.smenu a,.smenu button{display:flex;align-items:center;gap:8px;width:100%;padding:6px 10px;font:12px var(--ui);background:none;border:0;text-align:left;text-decoration:none;color:#000}
+.smenu a:hover,.smenu button:hover{background:var(--navy);color:#fff}
+.smenu hr{border:0;border-top:1px solid #808080;border-bottom:1px solid #fff;margin:2px}
+#toast{position:fixed;right:10px;bottom:40px;z-index:120;width:min(320px,calc(100vw - 20px));opacity:0;pointer-events:none;transform:translateY(8px);transition:.2s steps(3)}#toast.on{opacity:1;transform:none}
+#toast .wb{font:400 18px var(--term)}
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .35s steps(4),transform .35s steps(4)}.reveal.in{opacity:1;transform:none}
+@media (max-width:1050px){
+  .hero{grid-template-columns:minmax(0,1fr)}.icons{flex-direction:row;flex-wrap:wrap;justify-content:flex-start}
+  .wall{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;height:auto}
+  .main{grid-column:1/-1;grid-row:auto;height:min(560px,78vh)}.mon{height:170px}.mon.x{display:none}
+  .toks{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:minmax(0,1fr)}.idx{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .nav{display:none}.icons{display:none}.stats{grid-template-columns:minmax(0,1fr)}.g2{grid-template-columns:minmax(0,1fr)}
+  .toks{grid-template-columns:minmax(0,1fr)}.tbtn.hm{display:none}.main{height:600px}#out{font-size:17px}.mon{height:150px}
+  .wall{gap:8px}
+}
+@media (prefers-reduced-motion:reduce){.tick .run div{animation-duration:200s}.tick .live i{animation:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#cmd">Skip to the terminal</a>
+<div class="tick" aria-label="Sample market ticker"><span class="live"><i></i>LIVE</span><div class="run"><div id="tk"></div></div></div>
+<header class="top">
+  <a class="brand" href="#top" aria-label="Zone home"><canvas id="lg" width="16" height="16"></canvas><b>ZONE</b></a>
+  <nav class="nav" aria-label="Sections"><a class="b95 sm" href="#features">Features</a><a class="b95 sm" href="#how">How it works</a><a class="b95 sm" href="#top">Agent</a><a class="b95 sm" href="#explore">Explore</a><a class="b95 sm" href="#network">Network</a></nav>
+  <span class="sp"></span>
+  <a class="b95 sm" id="xTop" href="#" aria-label="Zone on X">𝕏</a>
+  <button class="b95 sm go" type="button" id="connB">Connect Wallet</button>
+</header>
+
+<main>
+<section class="hero" id="top" aria-label="Zone terminal">
+  <div class="icons" id="icons"></div>
+  <div class="wall" id="wall">
+    <div class="win main">
+      <div class="tb"><canvas data-ic="term"></canvas><span class="t">ZONE.EXE · token launch agent · C:\ZONE&gt;</span><span class="bx"><span>_</span><span>□</span><span>×</span></span></div>
+      <div class="menu"><u>File</u><u>Edit</u><u>Agent</u><u>Deploy</u><u>Help</u></div>
+      <div class="scr sunk">
+        <div id="out" aria-live="polite"></div>
+        <div class="chips"><a href="https://x.com/ZoneDotFun" target="_blank" rel="noopener" style="font:700 9px var(--pix);padding:3px 7px;background:#0b1424;color:#ff2bd6;border:1px solid #6a1a5a;text-decoration:none">@ZONEDOTFUN</a><button type="button" data-cmd="launch">LAUNCH</button><button type="button" data-cmd="help">HELP</button><button type="button" data-cmd="explore">EXPLORE</button><button type="button" data-cmd="status">STATUS</button><button type="button" data-cmd="fees">FEES</button><button type="button" data-cmd="clear">CLEAR</button></div>
+        <label class="inrow" for="cmd"><span id="ps">C:\ZONE&gt;</span><input id="cmd" autocomplete="off" spellcheck="false" placeholder="type launch to start…" aria-label="Command"></label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="page">
+  <div class="stats reveal">
+    <div class="win stat"><div class="tb g"><span class="t">tokens_created.exe</span></div><div class="wb"><canvas data-ic="cd"></canvas><div><small>› tokens_created</small><b id="s1">0</b></div></div></div>
+    <div class="win stat"><div class="tb c"><span class="t">avg_seconds_to_chain.exe</span></div><div class="wb"><canvas data-ic="clock"></canvas><div><small>› avg_seconds_to_chain</small><b id="s2">0</b></div></div></div>
+    <div class="win stat"><div class="tb m"><span class="t">sovereign_creators.exe</span></div><div class="wb"><canvas data-ic="pc"></canvas><div><small>› sovereign_creators</small><b id="s3">0</b></div></div></div>
+  </div>
+
+  <div class="sect reveal">[ 00 ] <em>INDEX</em></div>
+  <h2 class="h reveal">Where would you like <span>to go?</span></h2>
+  <div class="win reveal"><div class="tb"><canvas data-ic="folder"></canvas><span class="t">Exploring - C:\ZONE</span><span class="bx"><span>_</span><span>□</span><span>×</span></span></div>
+    <div class="menu"><u>File</u><u>Edit</u><u>View</u><u>Help</u></div>
+    <div class="cmdline">$ ls ~/zone</div>
+    <div class="idx sunk"><a href="#features"><canvas data-ic="folder"></canvas><b>01</b><span>features/</span></a><a href="#how"><canvas data-ic="folder"></canvas><b>02</b><span>how-it-works/</span></a><a href="#top"><canvas data-ic="term"></canvas><b>03</b><span>agent/</span></a><a href="#explore"><canvas data-ic="folder"></canvas><b>04</b><span>explore/</span></a><a href="#network"><canvas data-ic="globe"></canvas><b>05</b><span>network/</span></a></div>
+  </div>
+
+  <div class="sect reveal" id="features">[ 01 ] <em>FEATURES</em></div>
+  <h2 class="h reveal">Say the word. <span>We do the rest.</span></h2>
+  <div class="g3 feat reveal">
+    <div class="win"><div class="tb g"><span class="t">agent.exe</span></div><div class="wb"><canvas data-ic="term"></canvas><h3>Just say the word</h3>A name, a ticker and a link to your world. The agent turns that into a token. No code, no forms.</div></div>
+    <div class="win"><div class="tb m"><span class="t">creator_share.cfg</span></div><div class="wb"><canvas data-ic="coin"></canvas><h3>2% creator share</h3>Every launch wires a 2% creator share straight to your wallet. It's written into the contract from block one.</div></div>
+    <div class="win"><div class="tb c"><span class="t">non_custodial.sys</span></div><div class="wb"><canvas data-ic="lock"></canvas><h3>Non-custodial</h3>You sign, you own. Zone never holds your keys or your tokens.</div></div>
+    <div class="win"><div class="tb a"><span class="t">curve.dll</span></div><div class="wb"><canvas data-ic="chart"></canvas><h3>Bonding curve launch</h3>Every token starts on a bonding curve and graduates to a pool when it fills.</div></div>
+    <div class="win"><div class="tb v"><span class="t">settle.exe</span></div><div class="wb"><canvas data-ic="clock"></canvas><h3>Fast settlement</h3>From your words to on-chain in seconds, before your coffee cools.</div></div>
+    <div class="win"><div class="tb r"><span class="t">gatekeepers.txt</span></div><div class="wb"><canvas data-ic="note"></canvas><h3>No gatekeepers</h3>No code, no gatekeepers, no waiting list. Just launch.</div></div>
+  </div>
+
+  <div class="sect reveal" id="how">[ 02 ] <em>HOW IT WORKS</em></div>
+  <h2 class="h reveal">Three lines. <span>One token.</span></h2>
+  <div class="g3 reveal">
+    <div class="win step"><div class="tb"><span class="t">01_say.txt</span><span class="bx"><span>×</span></span></div><div class="wb"><div class="n">01</div><h3>Say the word</h3>Type <b>launch</b> in the terminal and give the agent a name, a ticker and a link.<div class="tl"><span style="background:var(--lime)">NAME</span><span style="background:var(--cyan)">TICKER</span><span style="background:var(--yellow)">LINK</span></div></div></div>
+    <div class="win step"><div class="tb c"><span class="t">02_write.txt</span><span class="bx"><span>×</span></span></div><div class="wb"><div class="n" style="color:#006a7a">02</div><h3>The agent writes it</h3>Zone writes the token contract, wires your 2% creator share, compiles it and runs the checks.<div class="tl"><span style="background:var(--violet)">CONTRACT</span><span style="background:var(--mag);color:#fff">2% SHARE</span><span style="background:var(--lime)">TESTS</span></div></div></div>
+    <div class="win step"><div class="tb g"><span class="t">03_mint.txt</span><span class="bx"><span>×</span></span></div><div class="wb"><div class="n" style="color:#0a6a0a">03</div><h3>It's on-chain</h3>You sign once and it mints on Solana on a bonding curve. Share the link and let it run.<div class="tl"><span style="background:var(--amber)">SIGN</span><span style="background:var(--blue);color:#fff">MINT</span><span style="background:var(--pink)">SHARE</span></div></div></div>
+  </div>
+
+  <div class="sect reveal" id="explore">[ 04 ] <em>EXPLORE</em></div>
+  <h2 class="h reveal">Fresh off <span>the terminal.</span></h2>
+  <div class="win reveal"><div class="tb y"><canvas data-ic="folder"></canvas><span class="t">explorer.exe · tokens launched with Zone · SAMPLE</span><span class="bx"><span>_</span><span>□</span><span>×</span></span></div>
+    <div class="wb"><div class="tabs" id="tabs"><button type="button" aria-pressed="true" data-t="new">New</button><button type="button" aria-pressed="false" data-t="hot">Trending</button><button type="button" aria-pressed="false" data-t="grad">Graduating</button><button type="button" aria-pressed="false" data-t="mine">Yours</button></div>
+      <div class="tabp"><div class="toks" id="toks"></div><div style="font:400 16px var(--term);color:#404040;margin-top:6px">Sample tokens for preview. Real launches show here once Zone goes live.</div></div></div>
+  </div>
+
+  <div class="sect reveal" id="network">[ 05 ] <em>NETWORK</em></div>
+  <h2 class="h reveal">The network, <span>live.</span></h2>
+  <div class="g2 reveal">
+    <div class="win"><div class="tb g"><span class="t">netmon.exe · launches per minute · SIMULATION</span><span class="bx"><span>_</span><span>×</span></span></div><div class="wb"><canvas id="netc" width="300" height="120" class="sunk"></canvas></div></div>
+    <div class="win"><div class="tb c"><span class="t">status.inf</span><span class="bx"><span>×</span></span></div><div class="wb">
+      <div class="kv"><span>chain</span><b>Solana</b></div><div class="kv"><span>status</span><b style="color:#0a7a0a">BONDING CURVE</b></div><div class="kv"><span>creator share</span><b>2%</b></div><div class="kv"><span>agent queue</span><b id="nq">0</b></div><div class="kv"><span>avg seconds to chain</span><b id="na">0</b></div><div class="kv"><span>last mint</span><b id="nl">—</b></div><div class="kv"><span>tps (sample)</span><b id="nt">0</b></div>
+    </div></div>
+  </div>
+
+  <div class="sect reveal" id="token">[ 06 ] <em>$ZONE</em></div>
+  <div class="g2 reveal">
+    <div class="win"><div class="tb a"><canvas data-ic="coin"></canvas><span class="t">token.inf · Solana SPL token</span><span class="bx"><span>×</span></span></div><div class="wb">
+      <div style="font:700 11px var(--pix)">CONTRACT ADDRESS</div>
+      <div class="ca"><input id="caT" value="CA drops on X at launch" readonly aria-label="Contract address"><button class="b95" type="button" id="caC">Copy</button></div>
+      <div style="font:400 18px/1.2 var(--term)">$ZONE is the token behind the Zone agent. You don't need it to launch a token.</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><a class="b95 go" id="buyA" href="#">Buy $ZONE</a><a class="b95" id="xA" href="#">Follow on X</a><a class="b95" id="chA" href="#">Chart</a></div>
+    </div></div>
+    <div class="win faq"><div class="tb v"><canvas data-ic="note"></canvas><span class="t">faq.txt · Notepad</span><span class="bx"><span>_</span><span>□</span><span>×</span></span></div><div class="wb" id="faqb"></div></div>
+  </div>
+
+  <div class="win reveal" style="margin-top:34px"><div class="tb m"><span class="t">ready.exe</span><span class="bx"><span>×</span></span></div>
+    <div class="cta"><div style="font:700 11px var(--pix);color:#808080">&gt;_ READY WHEN YOU ARE</div><h2>It's time for your vision to take form.</h2><p>Join a new generation of creators launching on Solana with Zone.</p><a class="b95 go" href="#top" data-focus>▶ Start creating</a> <a class="b95 cy" href="https://x.com/ZoneDotFun" target="_blank" rel="noopener">@ZoneDotFun on X</a></div>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="badges" aria-hidden="true"><span style="background:#000;color:var(--lime)">ZONE.EXE<br>RUNNING</span><span style="background:var(--mag);color:#fff">2% CREATOR<br>SHARE</span><span style="background:var(--cyan);color:#000">SOLANA<br>POWERED</span><span style="background:var(--yellow);color:#000">BEST VIEWED<br>800 x 600</span><span style="background:var(--navy);color:#fff">NO CODE<br>REQUIRED</span><span style="background:#c0c0c0;color:#000">UNDER<br>CONSTRUCTION</span></div>
+  <div>You are visitor <span class="counter" id="ctr"></span> to the Zone.</div>
+  <p class="fine">Zone · $ZONE · <a href="#" id="xF">X</a>. Zone is an independent project and is not affiliated with Zoza or any company named here. It is pre-launch: the ticker prices, stats, tokens and launches on this page are a simulated preview, and the terminal sends no transactions. Memecoins are extremely risky. Nothing here is financial advice.</p>
+</footer>
+
+<div class="task" role="toolbar" aria-label="Taskbar">
+  <button class="start" id="startB" type="button" aria-expanded="false"><canvas data-ic="logo"></canvas>Start</button>
+  <a class="tbtn on" href="#top"><canvas data-ic="term" style="width:14px;height:14px"></canvas>ZONE.EXE</a>
+  <a class="tbtn hm" href="#explore"><canvas data-ic="folder" style="width:14px;height:14px"></canvas>Explorer</a>
+  <a class="tbtn hm" href="#network"><canvas data-ic="globe" style="width:14px;height:14px"></canvas>Netmon</a>
+  <div class="tray"><b>$ZONE</b><span id="clk">--:--</span></div>
+</div>
+<div class="smenu" id="smenu"><div class="side"><b>Zone 98</b></div><ul>
+  <li><button type="button" data-cmd="launch">▶ Launch a token…</button></li>
+  <li><a href="#explore">📁 Explore tokens</a></li>
+  <li><a href="#how">📖 How it works</a></li>
+  <li><a href="#network">🌐 Network</a></li>
+  <li><a href="#token">💾 $ZONE</a></li>
+  <li><hr></li>
+  <li><a href="#" id="xM">✕ Zone on X</a></li>
+  <li><button type="button" id="shut">⏻ Shut down…</button></li>
+</ul></div>
+<div id="toast" role="status" aria-live="polite"><div class="win"><div class="tb"><span class="t" id="toT">Zone</span><span class="bx"><span>×</span></span></div><div class="wb" id="toB"></div></div></div>
+
+<script>
+(function(){
+'use strict';
+/* ============ CONFIG ============ */
+var CONFIG={xUrl:'https://x.com/ZoneDotFun',ca:'',buyUrl:'',chartUrl:''};
+/* ================================ */
+var $=function(s){return document.querySelector(s)},$$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+var REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var tt;function toast(m,t){$('#toT').textContent=t||'Zone';$('#toB').textContent=m;var e=$('#toast');e.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){e.classList.remove('on')},2800)}
+var LS={get:function(k,d){try{var v=localStorage.getItem('zone.'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set:function(k,v){try{localStorage.setItem('zone.'+k,JSON.stringify(v))}catch(e){}}};
+function pad(n){return (n<10?'0':'')+n}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function srand(s){return function(){s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+var B58='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+function mint(seed){var R=srand(seed),s='';for(var i=0;i<40;i++)s+=B58[R()*58|0];return s+'zone'}
+function usd(v){return v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1e3?'$'+(v/1e3).toFixed(1)+'K':'$'+v.toFixed(0)}
+
+/* ================= PIXEL ICONS ================= */
+var IP={'.':null,k:'#000000',w:'#ffffff',g:'#c0c0c0',d:'#808080',b:'#000080',B:'#1084d0',c:'#33f0ff',t:'#008080',y:'#ffe14d',Y:'#c8a800',o:'#ffae2b',r:'#ff4d4d',m:'#ff2bd6',l:'#7cff5b',L:'#2f8a2f',v:'#a77bff',n:'#05070f'};
+var IC={
+ pc:['................','..kkkkkkkkkkkk..','..kggggggggggk..','..kgkkkkkkkkgk..','..kgkttttttkgk..','..kgktwwwwtkgk..','..kgktwBBwtkgk..','..kgkttttttkgk..','..kgkkkkkkkkgk..','..kggggggggggk..','..kkkkkkkkkkkk..','...kgggggggggk..','.kkkkkkkkkkkkkk.','.kgdgdgdgdgdgdk.','.kkkkkkkkkkkkkk.','................'],
+ folder:['................','................','..kkkkk.........','.kyyyyyk........','.kyyyyyykkkkkkk.','.kyyyyyyyyyyyyyk','.kyyyyyyyyyyyyyk','.kYkkkkkkkkkkkkk','.kYkyyyyyyyyyyyk','.kYykyyyyyyyyyyk','.kYyykyyyyyyyyyk','.kYyyykyyyyyyyk.','.kYyyyykyyyyyyk.','.kkkkkkkkkkkkkk.','................','................'],
+ term:['................','kkkkkkkkkkkkkkkk','kbbbbbbbbbbbbwgk','kkkkkkkkkkkkkkkk','knnnnnnnnnnnnnnk','knlnnnnnnnnnnnnk','knnlnnnnnnnnnnnk','knlnnllllnnnnnnk','knnnnnnnnnnnnnnk','knmmmnnnnnnnnnnk','knnnnnncccnnnnnk','knyyyynnnnnnnnnk','knnnnnnnnnnnnnnk','kkkkkkkkkkkkkkkk','................','................'],
+ note:['................','..k.k.k.k.k.k...','.kwkwkwkwkwkwk..','.kwwwwwwwwwwwwk.','.kwdddddddddwwk.','.kwwwwwwwwwwwwk.','.kwdddddddddwwk.','.kwwwwwwwwwwwwk.','.kwdddddddddwwk.','.kwwwwwwwwwwwwk.','.kwddddddwwwwwk.','.kwwwwwwwwwwwwk.','.kwwwwwwwwwwwwkd','.kkkkkkkkkkkkkkd','..ddddddddddddd.','................'],
+ cd:['................','.....kkkkkk.....','...kkggwwggkk...','..kgwwggggccgk..','.kgwwgggggcccgk.','.kwggggkkgggccgk','kgggggkddkggggmk','kggggkdwwdkgggmk','kggggkdwwdkgggmk','kgggggkddkggggmk','.kgggggkkgggggk.','.kgmmgggggggggk.','..kgmmggggggggk.','...kkggggggkk...','.....kkkkkk.....','................'],
+ globe:['................','.....kkkkkk.....','...kkBBllBBkk...','..kBBlllBBBBBk..','.kBlllllBBBlBBk.','.kBlllBBBBllllk.','kBBllBBBBlllllBk','kBBBBBBBBllllBBk','kBBBlBBBBBllBBBk','kBBlllBBBBBBBBBk','.kBlllllBBBBBBk.','.kBBlllBBBBlBBk.','..kBBlBBBBllBk..','...kkBBBBBBkk...','.....kkkkkk.....','................'],
+ clock:['................','.....kkkkkk.....','...kkwwwwwwkk...','..kwwwwkwwwwwk..','.kwwwwwkwwwwwwk.','.kwwwwwkwwwwwwk.','kwwwwwwkwwwwwwwk','kwkwwwwkwwwwwkwk','kwwwwwwkkkkkwwwk','kwwwwwwwwwwwwwwk','.kwwwwwwwwwwwwk.','.kwwwwwwwwwwwwk.','..kwwwwkwwwwwk..','...kkwwwwwwkk...','.....kkkkkk.....','................'],
+ coin:['................','.....kkkkkk.....','...kkooooookk...','..koyyyyyyyyok..','.koyyyokkoyyyok.','.koyyykyykyyyok.','koyyyykyyyyyyyok','koyyyyykkoyyyyok','koyyyyyyyyykyyok','koyyyykyyyykyyok','.koyyyokkkkoyok.','.koyyyyyokyyyok.','..koyyyyyyyyok..','...kkooooookk...','.....kkkkkk.....','................'],
+ lock:['................','.....kkkkkk.....','....kddddddk....','...kdk....kdk...','...kdk....kdk...','...kdk....kdk...','..kkkkkkkkkkkk..','..koyyyyyyyyok..','..koyyykkyyyok..','..koyyykkyyyok..','..koyyyykyyyok..','..koyyyykyyyok..','..koyyyyyyyyok..','..kkkkkkkkkkkk..','................','................'],
+ chart:['................','kkkkkkkkkkkkkkkk','kwwwwwwwwwwwwwwk','kwwwwwwwwwwwlwwk','kwwwwwwwwwwlwwwk','kwwwwwwwwwlwwwwk','kwwwwlwwwlwwwwwk','kwwwlwlwlwwwwwwk','kwwlwwwlwwwwwwwk','kwlwwwwwwwwwwwwk','kwwwwwwwwwwwwwwk','kwmwwcwwywwlwwwk','kwmwwcwwywwlwwwk','kwmwwcwwywwlwwwk','kkkkkkkkkkkkkkkk','................'],
+ trash:['................','.....kkkkkk.....','..kkkkkkkkkkkk..','..kggggggggggk..','..kkkkkkkkkkkk..','...kgdgdgdgdk...','...kgdgdgdgdk...','...kgdgdgdgdk...','...kgdgdgdgdk...','...kgdgdgdgdk...','...kgdgdgdgdk...','...kgdgdgdgdk...','...kgdgdgdgdk...','...kkkkkkkkkk...','................','................'],
+ floppy:['................','.kkkkkkkkkkkkkk.','.kbbkggggggkbbk.','.kbbkggggkgkbbk.','.kbbkggggkgkbbk.','.kbbkggggggkbbk.','.kbbbbbbbbbbbbk.','.kbbbbbbbbbbbbk.','.kbbwwwwwwwwbbk.','.kbbwddddddwbbk.','.kbbwwwwwwwwbbk.','.kbbwddddddwbbk.','.kbbwwwwwwwwbbk.','.kkkkkkkkkkkkkk.','................','................'],
+ logo:['................','.kkkkkkkkkkkkkk.','.kmmmmmmmmmmmmk.','.kmkkkkkkkkkkmk.','.kmkkkkkkkkmkmk.','.kmmmmmmmkmmkmk.','.kkkkkkkkmmkkkk.','.kkkkkkkmmkkkkk.','.kkkkkkmmkkkkkk.','.kkkkkmmkkkkkkk.','.kmkkmmkmmmmmmk.','.kmkmmkkkkkkkmk.','.kmkkkkkkkkkkmk.','.kmmmmmmmmmmmmk.','.kkkkkkkkkkkkkk.','................']
+};
+// recolour logo Z with gradient rows
+function paint(cv,name){var g=IC[name];if(!g)return;cv.width=16;cv.height=16;var x=cv.getContext('2d');x.clearRect(0,0,16,16);var LC=['#ff2bd6','#ff4dc0','#ff6a9a','#ff8a6a','#ffae2b','#ffd23f','#c8f040','#7cff5b','#33f0ff','#3a7bff','#a77bff','#ff2bd6','#ff2bd6','#ff2bd6','#ff2bd6','#ff2bd6'];
+  for(var y=0;y<16;y++)for(var i=0;i<16;i++){var ch=g[y][i],c=IP[ch];if(!c)continue;if(name==='logo'&&ch==='m')c=LC[y];x.fillStyle=c;x.fillRect(i,y,1,1)}}
+function paintAll(){$$('canvas[data-ic]').forEach(function(c){paint(c,c.dataset.ic)})}
+paint($('#lg'),'logo');try{var fc=document.createElement('canvas');paint(fc,'logo');$('#fav').href=fc.toDataURL()}catch(e){}
+
+/* desktop icons */
+var DESK=[['pc','My Zone','#token'],['term','zone.exe','term'],['folder','explore','#explore'],['note','readme.txt','#how'],['globe','network','#network'],['floppy','launch.bat','launch'],['cd','$ZONE','#token'],['trash','Recycle Bin','trash']];
+$('#icons').innerHTML=DESK.map(function(d,i){return '<button type="button" class="dico" data-i="'+i+'"><canvas data-ic="'+d[0]+'"></canvas><span>'+d[1]+'</span></button>'}).join('');
+$$('#icons .dico').forEach(function(b){b.addEventListener('dblclick',go);b.addEventListener('click',function(e){if(matchMedia('(pointer:coarse)').matches)go.call(b,e)});function go(){var d=DESK[+b.dataset.i];if(d[2]==='term')$('#cmd').focus();else if(d[2]==='launch'){run('launch')}else if(d[2]==='trash')toast('The Recycle Bin is empty. Every token you launch stays on-chain.','Recycle Bin');else document.querySelector(d[2]).scrollIntoView({behavior:REDUCE?'auto':'smooth'})}});
+
+/* ================= MONITORS ================= */
+var MON=[
+ {id:'code',t:'contract.rs',c:'v',st:'Ln 1, Col 1'},
+ {id:'build',t:'compiler.log',c:'g',st:'cargo build'},
+ {id:'tests',t:'tests.exe',c:'c',st:'0 / 12 passed'},
+ {id:'deploy',t:'deploy.log',c:'a',st:'idle'},
+ {id:'mem',t:'mempool.exe',c:'m',st:'tps 0'},
+ {id:'fees',t:'fees.cfg',c:'y',st:'creator 2%'},
+ {id:'feed',t:'explorer.exe',c:'r',st:'latest mints'},
+ {id:'net',t:'netmon.exe',c:'',st:'latency 0ms'}
+];
+var wall=$('#wall');
+MON.forEach(function(m,i){var d=document.createElement('div');d.className='win mon'+(i>=4?' x':'');d.innerHTML='<div class="tb '+m.c+'"><span class="t">'+m.t+'</span><span class="bx"><span>_</span><span>×</span></span></div><div class="scr sunk"></div><div class="st sunk"><span>'+m.t.toUpperCase()+'</span><b></b></div>';m.el=d;m.scr=d.querySelector('.scr');m.stb=d.querySelector('.st b');m.stb.textContent=m.st;
+  if(window.innerWidth>1050){var pos=[[1,1],[4,1],[1,2],[4,2],[1,3],[2,3],[3,3],[4,3]];d.style.gridColumn=pos[i][0];d.style.gridRow=pos[i][1]}
+  wall.appendChild(d)});
+addEventListener('resize',function(){var big=window.innerWidth>1050,pos=[[1,1],[4,1],[1,2],[4,2],[1,3],[2,3],[3,3],[4,3]];MON.forEach(function(m,i){m.el.style.gridColumn=big?pos[i][0]:'';m.el.style.gridRow=big?pos[i][1]:''})});
+function M(id){return MON.filter(function(m){return m.id===id})[0]}
+// syntax highlight
+function hl(line){var h=esc(line);if(/^\s*\/\//.test(line))return '<span class="c">'+h+'</span>';
+  h=h.replace(/(&quot;[^&]*?&quot;)/g,'<span class="s">$1</span>');
+  h=h.replace(/\b(pub|fn|let|mut|use|struct|impl|const|return|mod|for|in|if|Ok|Err)\b/g,'<span class="k">$1</span>');
+  h=h.replace(/\b(\d+(?:_\d+)*)\b/g,'<span class="n">$1</span>');
+  h=h.replace(/\b([a-z_]+)(?=\()/g,'<span class="f">$1</span>');
+  h=h.replace(/(#\[[^\]]*\])/g,'<span class="o">$1</span>');return h}
+function contract(name,tk,link){return ['// '+name+' ($'+tk+') · written by Zone','use anchor_lang::prelude::*;','use zone_curve::{Curve, Share};','','#[program]','pub mod '+tk.toLowerCase()+' {','  use super::*;','  pub fn init(ctx: Context<Init>) -> Result<()> {','    let t = &mut ctx.accounts.token;','    t.name = "'+name+'".into();','    t.symbol = "'+tk+'".into();','    t.uri = "'+(link||'zone://none')+'".into();','    t.supply = 1_000_000_000;','    t.decimals = 6;','    // 2% creator share, wired at mint','    t.creator_bps = 200;','    t.creator = ctx.accounts.creator.key();','    Curve::open(&mut ctx.accounts.curve, 85)?;','    Ok(())','  }','}']}
+var SAMPLE=contract('Pixel Pup','PUP','https://x.com/pixelpup');
+var codeBuf=[],codeSrc=SAMPLE,codeI=0;
+function renderCode(){var m=M('code'),max=Math.max(4,Math.floor((m.scr.clientHeight-8)/16.5));var L=codeBuf.slice(-max);m.scr.innerHTML=L.map(function(l,i){return '<div><span class="c">'+pad((codeBuf.length-L.length+i+1)%100)+'</span> '+hl(l.v)+'</div>'}).join('');m.stb.textContent='Ln '+codeBuf.length+', Col 1'}
+function tickCode(){if(LAUNCHING)return;codeBuf.push({v:codeSrc[codeI%codeSrc.length]});codeI++;if(codeI%codeSrc.length===0){codeBuf.push({v:''})}if(codeBuf.length>60)codeBuf.splice(0,codeBuf.length-60);renderCode()}
+function logTo(id,html,max){var m=M(id);m.buf=m.buf||[];m.buf.push(html);var mx=max||Math.max(3,Math.floor((m.scr.clientHeight-8)/16.5));while(m.buf.length>mx)m.buf.shift();m.scr.innerHTML=m.buf.map(function(s){return '<div>'+s+'</div>'}).join('')}
+var BL=['<span class="c">   Compiling</span> zone_curve v0.4.2','<span class="f">   Compiling</span> anchor-lang v0.30','<span class="f">   Compiling</span> token <span class="s">$PUP</span>','<span class="o">warning</span>: unused var <span class="s">_x</span>','<span class="f">    Finished</span> release [optimized]','<span class="n">     Size</span> 212 KB · ok'];
+var TL=['test init_name ... <span class="f">ok</span>','test init_symbol ... <span class="f">ok</span>','test supply_1b ... <span class="f">ok</span>','test creator_2pct ... <span class="f">ok</span>','test curve_open ... <span class="f">ok</span>','test no_mint_auth ... <span class="f">ok</span>','test freeze_off ... <span class="f">ok</span>','test uri_set ... <span class="f">ok</span>','test buy_curve ... <span class="f">ok</span>','test sell_curve ... <span class="f">ok</span>','test grad_85 ... <span class="f">ok</span>','test fee_route ... <span class="f">ok</span>'];
+var DL=['<span class="c">[rpc]</span> connected · mainnet-beta','<span class="o">[tx]</span> building init ix','<span class="o">[tx]</span> signing (preview)','<span class="n">[tx]</span> sent · slot 3'+'1824119','<span class="f">[ok]</span> confirmed in 0.9s','<span class="v">[curve]</span> open · 0.0% filled'];
+var bi=0,ti=0,di=0,tpass=0;
+// fees monitor: animated pie + text
+function drawFees(s){var m=M('fees');if(!m.cv){m.scr.innerHTML='<canvas width="120" height="64" style="width:100%;height:100%;display:block"></canvas>';m.cv=m.scr.querySelector('canvas')}var x=m.cv.getContext('2d');x.fillStyle='#05070f';x.fillRect(0,0,120,64);var cx=30,cy=32,r=22,parts=[[.02,'#ff2bd6'],[.88,'#33f0ff'],[.10,'#ffae2b']],a0=-Math.PI/2+s*.3;
+  parts.forEach(function(p){x.beginPath();x.moveTo(cx,cy);x.arc(cx,cy,r,a0,a0+p[0]*Math.PI*2+(p[0]<.05?.12:0));x.closePath();x.fillStyle=p[1];x.fill();a0+=p[0]*Math.PI*2});x.fillStyle='#05070f';x.beginPath();x.arc(cx,cy,10,0,7);x.fill();
+  x.font='9px monospace';[['CREATOR 2%','#ff2bd6'],['CURVE 88%','#33f0ff'],['LP 10%','#ffae2b']].forEach(function(l,i){x.fillStyle=l[1];x.fillRect(62,14+i*14,6,6);x.fillStyle='#cfe';x.fillText(l[0],71,20+i*14)})}
+// mempool bars
+function drawMem(s){var m=M('mem');if(!m.cv){m.scr.innerHTML='<canvas width="120" height="64" style="width:100%;height:100%;display:block"></canvas>';m.cv=m.scr.querySelector('canvas')}var x=m.cv.getContext('2d');x.fillStyle='#05070f';x.fillRect(0,0,120,64);var C=['#7cff5b','#33f0ff','#ff2bd6','#ffae2b','#a77bff','#ffe14d'];for(var i=0;i<20;i++){var v=(Math.sin(s*1.4+i*.7)*.35+.5)+Math.sin(i*1.9)*.1,h=Math.max(3,v*54);for(var y=0;y<h;y+=3){x.fillStyle=C[(i+(y/9|0))%6];x.fillRect(2+i*6,62-y,5,2)}}m.stb.textContent='tps '+(2400+Math.round(Math.sin(s)*600))}
+// net latency graph
+var NET=[];function drawNet(s){var m=M('net');if(!m.cv){m.scr.innerHTML='<canvas width="120" height="64" style="width:100%;height:100%;display:block"></canvas>';m.cv=m.scr.querySelector('canvas')}var x=m.cv.getContext('2d');NET.push(20+Math.sin(s*1.3)*8+Math.random()*10);if(NET.length>60)NET.shift();x.fillStyle='#05070f';x.fillRect(0,0,120,64);x.fillStyle='#10203a';for(var gy=8;gy<64;gy+=14)x.fillRect(0,gy,120,1);
+  x.strokeStyle='#7cff5b';x.lineWidth=1;x.beginPath();NET.forEach(function(v,i){var X=i*2,Y=60-v;i?x.lineTo(X,Y):x.moveTo(X,Y)});x.stroke();x.fillStyle='rgba(124,255,91,.15)';x.lineTo((NET.length-1)*2,64);x.lineTo(0,64);x.fill();m.stb.textContent='latency '+Math.round(NET[NET.length-1])+'ms'}
+// explorer feed
+var NAMES=[['Pixel Pup','PUP'],['Dial Up Dog','DIAL'],['Floppy Frog','FLOP'],['Clippy Cat','CLIP'],['Screensaver','SAVER'],['Y2K Bug','Y2K'],['Minesweeper','MINE'],['Winamp Whale','AMP'],['Baud Rate','BAUD'],['Blue Screen','BSOD'],['Geo Cities','GEO'],['Away Msg','BRB'],['Napster Ape','NAP'],['CD Burner','BURN'],['Webring','RING'],['Hit Counter','HITS']];
+var TOK=NAMES.map(function(n,i){var R=srand(i*97+11);return {n:n[0],t:n[1],mc:2500+Math.pow(R(),2)*90000,fill:R()*100,age:(i*7+R()*40)|0,seed:i*131+7,mine:false,hot:R()}});
+LS.get('mine',[]).forEach(function(t){TOK.unshift(t)});
+function feedLine(){var t=TOK[Math.random()*TOK.length|0],cs=['f','n','s','v','o','k'];logTo('feed','<span class="c">'+new Date().toTimeString().slice(0,8)+'</span> <span class="'+cs[Math.random()*6|0]+'">$'+esc(t.t)+'</span> '+(Math.random()<.6?'<span class="f">buy</span>':'<span class="e">sell</span>')+' '+(Math.random()*4).toFixed(2))}
+function tickLogs(){if(LAUNCHING)return;logTo('build',BL[bi++%BL.length]);var tm=M('tests');tpass=(tpass%12)+1;logTo('tests',TL[ti++%TL.length]);tm.stb.textContent=tpass+' / 12 passed';logTo('deploy',DL[di++%DL.length]);M('deploy').stb.textContent=['idle','building','signing','sent','confirmed','curve open'][(di-1)%6]}
+var T0=performance.now();function anim(){var s=(performance.now()-T0)/1000;drawFees(s);drawMem(s);requestAnimationFrame(function(){setTimeout(anim,REDUCE?2000:120)})}
+function seedMon(){for(var i=0;i<14;i++)tickCode();for(i=0;i<5;i++){tickLogs();feedLine()}for(i=0;i<60;i++)drawNet(i*.1)}
+seedMon();anim();
+if(!REDUCE){setInterval(tickCode,420);setInterval(tickLogs,1300);setInterval(feedLine,1700);setInterval(function(){drawNet((performance.now()-T0)/1000)},400)}
+
+/* ================= TERMINAL AGENT ================= */
+var OUT=$('#out'),CMD=$('#cmd'),LAUNCHING=false,WIZ=null;
+function say(html,cls){var d=document.createElement('div');d.className='l'+(cls?' '+cls:'');d.innerHTML=html;OUT.appendChild(d);while(OUT.children.length>140)OUT.removeChild(OUT.firstChild);OUT.scrollTop=OUT.scrollHeight;return d}
+function banner(){OUT.innerHTML='';say('<span class="c">Zone(R) Token Launch Agent  v1.0  ·  (C) 2026  ·  Solana</span>');say('<div class="big"><span class="a">Say the word.</span><span class="b">It\u2019s on-chain.</span></div>');say('A name, a ticker, a link to your world. Zone writes the contract, wires your <span class="k">2% creator share</span>, and mints it on Solana before your coffee cools.');say('<span class="c">──────────────────────────</span>');say('Type <span class="f">launch</span> to start, or <span class="n">help</span> for commands. <span class="c">(preview: nothing is sent on-chain)</span>')}
+var HELP=[['launch','start the launch agent'],['explore','browse tokens launched with Zone'],['status','network + agent status'],['fees','where the fees go'],['x','Zone on X (@ZoneDotFun)'],['whoami','your wallet'],['clear','clear the screen']];
+function prompt(p){$('#ps').textContent=p||'C:\\ZONE>'}
+function run(raw){var v=String(raw||'').trim();if(!v)return;say('<span class="f">'+esc($('#ps').textContent)+'</span> <span class="w">'+esc(v)+'</span>');
+  if(WIZ){wizStep(v);return}
+  var c=v.toLowerCase().split(/\s+/)[0];
+  if(c==='help'||c==='?'){HELP.forEach(function(h){say('  <span class="n">'+h[0]+'</span>'+' '.repeat(10-h[0].length)+'<span class="c">'+h[1]+'</span>')})}
+  else if(c==='launch'||c==='new'||c==='create'){var mm=v.match(/^\S+\s+(.+?)\s+\$?([A-Za-z0-9]{2,10})(?:\s+(https?:\/\/\S+))?$/i);if(mm){WIZ={i:3,d:{name:mm[1].slice(0,32),tk:mm[2].toUpperCase(),link:mm[3]||''}};confirmWiz()}else startWiz()}
+  else if(c==='clear'||c==='cls'){banner()}
+  else if(c==='explore'||c==='ls'){say('opening <span class="s">explorer.exe</span>…');setTimeout(function(){$('#explore').scrollIntoView({behavior:REDUCE?'auto':'smooth'})},300)}
+  else if(c==='status'){say('chain  <span class="f">Solana</span>  ·  status <span class="f">BONDING CURVE</span>');say('agent  <span class="f">online</span>  ·  queue <span class="n">'+$('#nq').textContent+'</span>  ·  avg <span class="n">'+$('#na').textContent+'s</span> to chain')}
+  else if(c==='fees'){say('creator share  <span class="k">2%</span>  → your wallet, every trade');say('curve          <span class="n">88%</span> of supply on the bonding curve');say('graduation     <span class="o">10%</span> seeds the pool when the curve fills')}
+  else if(c==='x'||c==='twitter'||c==='socials'){say('follow <a href="https://x.com/ZoneDotFun" target="_blank" rel="noopener" class="k">@ZoneDotFun</a> on X for the launch + CA');}
+  else if(c==='whoami'){say('wallet: <span class="e">not connected</span> · wallet connect opens at launch')}
+  else if(c==='sudo'){say('<span class="e">nice try.</span> no gatekeepers here, including you.')}
+  else if(c==='rm'){say('<span class="e">Access denied.</span> Tokens are forever.')}
+  else {say('<span class="o">agent:</span> I launch tokens. Try <span class="f">launch</span>, or tell me with <span class="f">launch &lt;name&gt; $TICKER</span>.');}
+}
+function startWiz(){WIZ={i:0,d:{}};say('<span class="o">agent:</span> Let\u2019s make something. What\u2019s it called? <span class="c">(name, up to 32 chars)</span>');prompt('name>')}
+function wizStep(v){var d=WIZ.d;if(/^(cancel|quit|exit)$/i.test(v)){WIZ=null;prompt();say('<span class="o">agent:</span> cancelled. Say the word when you\u2019re ready.');return}
+  if(WIZ.i===0){if(v.length<2){say('<span class="e">name needs 2+ characters.</span>');return}d.name=v.slice(0,32);WIZ.i=1;say('<span class="o">agent:</span> Nice. Ticker? <span class="c">(2\u201310 letters/numbers)</span>');prompt('ticker> $');return}
+  if(WIZ.i===1){var t=v.replace(/^\$/,'').toUpperCase();if(!/^[A-Z0-9]{2,10}$/.test(t)){say('<span class="e">ticker must be 2\u201310 letters or numbers.</span>');return}if(TOK.some(function(x){return x.t===t})){say('<span class="e">$'+t+' is taken in this preview. pick another.</span>');return}d.tk=t;WIZ.i=2;say('<span class="o">agent:</span> Link to your world? <span class="c">(X, site, telegram \u2014 or type skip)</span>');prompt('link>');return}
+  if(WIZ.i===2){if(/^skip$/i.test(v))d.link='';else if(!/^https?:\/\/\S+\.\S+/.test(v)){say('<span class="e">links start with https:// \u2014 or type skip.</span>');return}else d.link=v;WIZ.i=3;confirmWiz();return}
+  if(WIZ.i===3){if(/^y(es)?$/i.test(v)){WIZ=null;prompt();doLaunch(d)}else{WIZ=null;prompt();say('<span class="o">agent:</span> no worries. Type <span class="f">launch</span> to start over.')}}}
+function confirmWiz(){var d=WIZ.d;say('<span class="c">┌─ launch brief ─────────────────────</span>');say('<span class="c">│</span> name    <span class="s">'+esc(d.name)+'</span>');say('<span class="c">│</span> ticker  <span class="n">$'+esc(d.tk)+'</span>');say('<span class="c">│</span> link    <span class="v">'+esc(d.link||'none')+'</span>');say('<span class="c">│</span> supply  1,000,000,000 · creator share <span class="k">2%</span>');say('<span class="c">└────────────────────────────────────</span>');say('<span class="o">agent:</span> Launch it? <span class="c">(y / n)</span>');prompt('confirm>')}
+function doLaunch(d){LAUNCHING=true;var t0=performance.now(),src=contract(d.name,d.tk,d.link),i=0;say('<span class="o">agent:</span> on it. writing <span class="s">'+d.tk.toLowerCase()+'.rs</span>…');codeBuf=[];M('build').buf=[];M('tests').buf=[];M('deploy').buf=[];
+  var steps=[];src.forEach(function(l){steps.push(function(){codeBuf.push({v:l});renderCode();if(Math.random()<.4)say(hl(l))})});
+  steps.push(function(){say('<span class="f">✓</span> contract written · '+src.length+' lines');logTo('build','<span class="f">   Compiling</span> token <span class="s">$'+esc(d.tk)+'</span>')});
+  steps.push(function(){say('<span class="f">✓</span> 2% creator share wired → <span class="k">your wallet</span>');logTo('build','<span class="f">    Finished</span> release [optimized]')});
+  TL.forEach(function(tl,k){steps.push(function(){logTo('tests',tl);M('tests').stb.textContent=(k+1)+' / 12 passed'})});
+  steps.push(function(){say('<span class="f">✓</span> tests 12/12 passed');logTo('deploy','<span class="o">[tx]</span> signing (preview)');M('deploy').stb.textContent='signing'});
+  steps.push(function(){say('<span class="n">…</span> minting on Solana <span class="c">(simulated)</span>');logTo('deploy','<span class="n">[tx]</span> sent (simulated)')});
+  steps.push(function(){var sec=((performance.now()-t0)/1000).toFixed(1),mt=mint(Date.now()%1e9);logTo('deploy','<span class="f">[ok]</span> $'+esc(d.tk)+' on curve');M('deploy').stb.textContent='live (preview)';
+    say('<span class="f">█ DONE</span> in <span class="n">'+sec+'s</span> · <span class="s">$'+esc(d.tk)+'</span> is on the bonding curve');say('mint  <span class="v">'+mt.slice(0,6)+'…'+mt.slice(-8)+'</span> <span class="c">(preview address)</span>');say('<span class="o">agent:</span> share it. it\u2019s in <span class="f">explore</span> under Yours.');
+    var tok={n:d.name,t:d.tk,mc:3200,fill:0.4,age:0,seed:Date.now()%1e9,mine:true,hot:0,link:d.link};TOK.unshift(tok);var mine=LS.get('mine',[]);mine.unshift(tok);LS.set('mine',mine.slice(0,20));CREATED++;renderToks();toast('$'+d.tk+' launched in this preview. Nothing was sent on-chain.','zone.exe');$('#nl').textContent='$'+d.tk;LAUNCHING=false;codeSrc=src;codeI=0});
+  (function next(){if(!steps.length)return;steps.shift()();setTimeout(next,REDUCE?20:110)})()}
+CMD.addEventListener('keydown',function(e){if(e.key==='Enter'){var v=CMD.value;CMD.value='';run(v)}});
+$$('[data-cmd]').forEach(function(b){b.addEventListener('click',function(){$('#smenu').classList.remove('on');$('#startB').setAttribute('aria-expanded','false');if(b.closest('.smenu'))$('#top').scrollIntoView({behavior:REDUCE?'auto':'smooth'});if(LAUNCHING)return;run(b.dataset.cmd);CMD.focus({preventScroll:true})})});
+$$('[data-focus]').forEach(function(a){a.addEventListener('click',function(){setTimeout(function(){CMD.focus({preventScroll:true})},500)})});
+banner();
+
+/* ================= EXPLORE ================= */
+function ident(cv,seed,tk){cv.width=cv.height=10;var x=cv.getContext('2d'),R=srand(seed),C=['#7cff5b','#33f0ff','#ff2bd6','#ffae2b','#a77bff','#ffe14d','#3a7bff','#ff4d4d'],c1=C[R()*8|0],c2=C[R()*8|0];x.fillStyle='#000080';x.fillRect(0,0,10,10);for(var y=1;y<9;y++)for(var i=1;i<5;i++)if(R()<.55){x.fillStyle=R()<.75?c1:c2;x.fillRect(i,y,1,1);x.fillRect(9-i,y,1,1)}}
+var TAB='new';
+function renderToks(){var L=TOK.slice();if(TAB==='hot')L.sort(function(a,b){return b.mc-a.mc});else if(TAB==='grad')L=L.filter(function(t){return t.fill>60}).sort(function(a,b){return b.fill-a.fill});else if(TAB==='mine')L=L.filter(function(t){return t.mine});else L.sort(function(a,b){return a.age-b.age});
+  $('#toks').innerHTML=L.length?L.slice(0,12).map(function(t){var cs=['#7cff5b','#33f0ff','#ff2bd6','#ffae2b'];return '<button type="button" class="tok" data-t="'+esc(t.t)+'"><canvas data-seed="'+t.seed+'"></canvas><span style="flex:1;min-width:0"><b>$'+esc(t.t)+(t.mine?'<span class="yours">YOURS</span>':'')+'</b><small>'+esc(t.n)+' · '+(t.age?t.age+'m ago':'just now')+'</small><small>MC '+usd(t.mc)+' · curve '+t.fill.toFixed(0)+'%</small><span class="bar"><i style="width:'+Math.max(2,t.fill)+'%;background:'+cs[t.seed%4]+'"></i></span></span></button>'}).join(''):'<div style="font:400 18px var(--term);padding:10px">Nothing here yet. Type <b>launch</b> in the terminal.</div>';
+  $$('#toks canvas').forEach(function(c){ident(c,+c.dataset.seed)})}
+$$('#tabs button').forEach(function(b){b.addEventListener('click',function(){TAB=b.dataset.t;$$('#tabs button').forEach(function(o){o.setAttribute('aria-pressed',o===b)});renderToks()})});
+$('#toks').addEventListener('click',function(e){var b=e.target.closest('.tok');if(!b)return;var t=TOK.filter(function(x){return x.t===b.dataset.t})[0];toast('$'+t.t+' · '+t.n+' · MC '+usd(t.mc)+' · curve '+t.fill.toFixed(0)+'%. Trading opens when Zone goes live.','token.inf')});
+renderToks();
+setInterval(function(){TOK.forEach(function(t){if(!t.mine){t.mc*=1+(Math.random()-.48)*.03;t.fill=Math.min(99,t.fill+Math.random()*.3)}});if(TAB!=='mine')renderToks()},6000);
+
+/* ================= STATS / NETWORK / TICKER ================= */
+var CREATED=18342+LS.get('mine',[]).length;
+function count(el,to,dec){var from=0,st=performance.now();(function f(){var u=Math.min(1,(performance.now()-st)/1400),v=from+(to-from)*(1-Math.pow(1-u,3));el.textContent=dec?v.toFixed(dec):Math.round(v).toLocaleString();if(u<1)requestAnimationFrame(f)})()}
+var counted=false;try{new IntersectionObserver(function(es){if(es[0].isIntersecting&&!counted){counted=true;count($('#s1'),CREATED);count($('#s2'),4.2,1);count($('#s3'),9621)}}).observe($('.stats'))}catch(e){$('#s1').textContent=CREATED}
+var NP=[];function drawNetC(){var c=$('#netc'),x=c.getContext('2d'),W=300,H=120;NP.push(8+Math.sin(performance.now()/2000)*4+Math.random()*6);if(NP.length>75)NP.shift();x.fillStyle='#000';x.fillRect(0,0,W,H);x.fillStyle='#0a2a2a';for(var gx=0;gx<W;gx+=20)x.fillRect(gx,0,1,H);for(var gy=0;gy<H;gy+=20)x.fillRect(0,gy,W,1);
+  var C=['#7cff5b','#33f0ff','#ff2bd6','#ffae2b','#a77bff'];NP.forEach(function(v,i){var h=v*5;for(var y=0;y<h;y+=3){x.fillStyle=C[Math.floor(y/18)%5];x.fillRect(i*4,H-y-2,3,2)}});x.fillStyle='#fff';x.font='10px monospace';x.fillText('LAUNCHES / MIN  '+NP[NP.length-1].toFixed(1),6,12);
+  $('#nq').textContent=Math.round(NP[NP.length-1]);$('#na').textContent=(3.6+Math.random()*1.4).toFixed(1);$('#nt').textContent=(2200+Math.round(Math.random()*900)).toLocaleString()}
+for(var k=0;k<75;k++)drawNetC();setInterval(drawNetC,1000);
+var PRICE=0.00851;function tick(){PRICE*=1+(Math.random()-.48)*.01;var mc=PRICE*1e9;$('#tk').innerHTML=['<span>$ZONE <b style="color:#7cff5b">$'+PRICE.toFixed(5)+'</b></span>','<span>CIRC MCAP <b>'+usd(mc)+'</b></span>','<span>BURNED <b style="color:#ff4d4d">27.4M (2.75%)</b></span>','<span>STATUS <b style="color:#ffae2b">BONDING CURVE</b></span>','<span>SOL <b style="color:#33f0ff">$'+(180+Math.random()*4).toFixed(2)+'</b></span>','<span>TOKENS CREATED <b>'+CREATED.toLocaleString()+'</b></span>','<span>CREATOR SHARE <b style="color:#ff2bd6">2%</b></span>','<span style="color:#808080">SAMPLE FEED UNTIL LAUNCH</span>'].join('')}
+tick();setInterval(tick,8000);
+
+/* ================= MISC ================= */
+var FAQ=[['What is Zone?','A token launch agent. You give it a name, a ticker and a link, and it writes the contract, wires your 2% creator share and mints the token on Solana.'],['Do I need to code?','No. You type in the terminal and the agent does the rest.'],['What is the 2% creator share?','A share of every trade on your token that goes to your wallet. It\u2019s set in the contract at mint.'],['Is it non-custodial?','Yes. You sign the launch yourself. Zone never holds your keys.'],['Is this live?','Not yet. Everything on this page, including the terminal launches, is a simulated preview. Nothing is sent on-chain.'],['What is $ZONE?','The token behind the Zone agent. You don\u2019t need it to launch.']];
+$('#faqb').innerHTML=FAQ.map(function(f,i){return '<details'+(i===0?' open':'')+'><summary>'+f[0]+'</summary><p>'+f[1]+'</p></details>'}).join('');
+function wire(sel,url,msg){var e=$(sel);if(!e)return;if(url){e.href=url;e.target='_blank';e.rel='noopener'}else e.addEventListener('click',function(ev){ev.preventDefault();toast(msg)})}
+['#xA','#xF','#xM','#xTop'].forEach(function(s){wire(s,CONFIG.xUrl,'X account drops soon.')});wire('#buyA',CONFIG.buyUrl,'$ZONE goes live at launch.');wire('#chA',CONFIG.chartUrl,'Chart goes live at launch.');
+if(CONFIG.ca)$('#caT').value=CONFIG.ca;$('#caC').addEventListener('click',function(){if(!CONFIG.ca){toast('CA drops on X at launch.');return}try{navigator.clipboard.writeText(CONFIG.ca);toast('CA copied.')}catch(e){toast(CONFIG.ca)}});
+$('#connB').addEventListener('click',function(){toast('Wallet connect opens when Zone goes live.','Connect Wallet')});
+$('#startB').addEventListener('click',function(e){e.stopPropagation();var m=$('#smenu'),on=!m.classList.contains('on');m.classList.toggle('on',on);this.setAttribute('aria-expanded',on)});
+document.addEventListener('click',function(e){if(!e.target.closest('#smenu')&&!e.target.closest('#startB')){$('#smenu').classList.remove('on');$('#startB').setAttribute('aria-expanded','false')}});
+$$('#smenu a').forEach(function(a){a.addEventListener('click',function(){$('#smenu').classList.remove('on')})});
+$('#shut').addEventListener('click',function(){toast('It is now safe to turn off your computer. Your tokens stay on-chain.','Shut Down Zone')});
+setInterval(function(){var n=new Date(),h=n.getHours();$('#clk').textContent=((h%12)||12)+':'+pad(n.getMinutes())+' '+(h>=12?'PM':'AM')},1000);
+(function(){var n=LS.get('hits',0)+1;LS.set('hits',n);var s=String(2026+n);while(s.length<7)s='0'+s;$('#ctr').innerHTML=s.split('').map(function(d){return '<span>'+d+'</span>'}).join('')})();
+paintAll();
+try{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.06});$$('.reveal').forEach(function(el){io.observe(el)})}catch(e){$$('.reveal').forEach(function(el){el.classList.add('in')})}
+window.__zone={run:run};
+})();
+</script>
+</body>
+</html>
